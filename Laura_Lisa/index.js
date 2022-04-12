@@ -28,7 +28,7 @@ function process_wb(wb, headers) {
 
 app.get('/', function(request, response) {
     console.log('Bienvenus')
-    response.send('Bienvenue sur mon serveur');
+    response.send('Bienvenu');
 })
 
 
@@ -78,7 +78,7 @@ app.get('/nom2', function(request, response) {
     var json = process_wb(file1, { CodeInsee: 2, BureauVote: 1, Departement: 3, Inscrits: 8, Votant: 11, LE_PEN: 28, MACRON: 29, HAMON: 30, ARTHAUD: 31, POUTOU: 32, CHEMINADE: 33, LASSALLE: 34, MELENCHON: 35, ASSELINEAU: 36, FILLON: 37, DUPONTAIGNAN: 38 });
 
     // Printing data
-    response.send(json);
+    response.json(json);
 
 })
 
