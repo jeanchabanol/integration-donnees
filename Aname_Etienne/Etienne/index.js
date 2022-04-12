@@ -1,8 +1,8 @@
 
 "use strict";
 
-const express= require('express');
-const axios = require('axios');
+import express from 'express';
+import { get } from 'axios';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -13,8 +13,7 @@ app.get('/', function(request, response){
 })
 
 app.get('/commune_insee', function(request, response){
-	axios
-	  .get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=correspondance-code-insee-code-postal%40public&q=&rows=1&facet=insee_com&facet=nom_dept')
+	get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=correspondance-code-insee-code-postal%40public&q=&rows=1&facet=insee_com&facet=nom_dept')
 	  .then(res => {
 	    console.log(`statusCode: ${res.status}`)
         response.send(res['data']['records'])
