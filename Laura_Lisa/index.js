@@ -58,7 +58,7 @@ app.get('/nom1', function(request, response) { // NE FONCTIONNE QU'EN LOCAL
 
     const file = XLSX.readFile('./données/Presidentielle_2017_Resultats_BV_T1_clean_def.xlsx')
 
-    var json = process_wb(file, { CodeInsee: 2, });
+    var json = process_wb(file, { CodeInsee: 2 });
     console.log(json);
 
     // Printing data
