@@ -1,18 +1,17 @@
 {
   "name": "aname_etienne",
   "version": "1.0.0",
-  "description": "Projet",
+  "description": "projet",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "C:\\Users\\etien\\Documents\\GitHub\\integration-donnees\\"
+  "author": "etienne",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "node-fetch": "^3.2.3",
+    "opendata-node": "^0.0.2"
   },
-  "keywords": [
-    "projet"
-  ],
-  "author": "groupe",
-  "license": "ISC"
+  "keywords": []
 }
