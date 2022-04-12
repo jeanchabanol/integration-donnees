@@ -45,27 +45,24 @@ app.get('/', function(request, response){
 })
 
 app.get('/Communes', function(request, response){
-	const data = {}
+	var obj = new Object();
+	
 	axios
-	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=10000')
+	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=1')
 	  .then(res => {
 		console.log(`statusCode: ${res.status}`)
 	    console.log(res)
-	    console.log(res['data']['records']).forEach(element =>{
-			if (element['fields']['code_commune_insee'] in data) {
-				if('date' in data[element['fields']['code_commune_insee']]){
-					
-					data[element['fields']['code_commune_insee']]['coordinates'] = element['fields']['coordonnées'];
-					
-				}
-			  }else{
-				data[element['fields']['code_commune_insee']] = {}
-				data[element['fields']['code_commune_insee']]['coordinates'] = element['fields']['coordonnées'];
-			  }
-			})
 
-		console.log(data)
-		response.send(data)
+		obj.a = res['data']['records'][0]['fileds']['nom_de_la_commune']
+		obj.b = res['data']['records'][0]['fileds']['nom_de_la_commune']
+		obj.c = res['data']['records'][0]['fileds']['nom_de_la_commune']
+
+		var jsons = JSON.stringify(obj)
+
+
+
+
+		response.send(jsons)
 	})
 
 })
