@@ -1,6 +1,8 @@
 "use strict";
 
 import express from 'express';
+import axios from 'axios';
+const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -36,17 +38,41 @@ const PORT = process.env.PORT || 3001;
 // })
 
 
-"use strict";
-
 app.get('/', function(request, response){
 	console.log('Bienvenus')
 	response.send('Bienvenue sur mon serveur');
 })
 
 app.get('/Communes', function(request, response){
-	response.send('Communes')
+	const data = {}
+	axios
+	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=10000')
+	  .then(res => {
+		console.log(`statusCode: ${res.status}`)
+	    console.log(res)
+	    console.log(res['data']['records']).forEach(element =>{
+			if (element['fields']['code_commune_insee'] in data) {
+				if('date' in data[element['fields']['code_commune_insee']]){
+					
+					data[element['fields']['code_commune_insee']]['coordinates'] = element['fields']['coordonnées'];
+					
+				}
+			  }else{
+				data[element['fields']['code_commune_insee']] = {}
+				data[element['fields']['code_commune_insee']]['coordinates'] = element['fields']['coordonnées'];
+			  }
+			})
+
+		console.log(data)
+	response.send('data')
+	})
 
 })
+app.get('Communes/:code_commune_insee', function(req, res) {
+	     const course = courses.find(c => c.code_commune_insee === parseInt(req.params.code_commune_insee));
+	     if (!course) res.status (404).send ('The course with the given ID was not found');
+	     res.send(course);
+	 })
 
 app.listen(PORT, function(){
 	console.log('Bienvenu sur le port :'+ PORT);
