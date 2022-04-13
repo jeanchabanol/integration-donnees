@@ -21,6 +21,10 @@ app.get('/Communes', function(request, response){
 	axios
 	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=12')
 	  .then(res => {
+
+		console.log(`statusCode: ${res.status}`)
+
+
 		//obj['Commune'] = res['data']['records'][0]['fields']['nom_de_la_commune'];
 		//obj['Code_Insee'] = res['data']['records'][0]['fields']['code_commune_insee']
 		//obj['Coord'] = res['data']['records'][0]['geometry']['coordinates']
