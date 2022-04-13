@@ -1,28 +1,45 @@
 
 "use strict";
 
-import express from 'express';
-import { get } from 'axios';
-const app = express();
+const express = require('express')
+const app = express()
+const axios = require('axios');
 const PORT = process.env.PORT || 3000;
 
 
+
 app.get('/', function(request, response){
-	console.log('hello')
-	response.send('bienvenue sur mon serveur');
+	console.log('Bienvenus')
+	response.send('Bienvenue sur mon serveur');
 })
 
-app.get('/commune_insee', function(request, response){
-	get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=correspondance-code-insee-code-postal%40public&q=&rows=1&facet=insee_com&facet=nom_dept')
+app.get('/Communes', function(request, response){
+	var data = [];
+	axios
+	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=12')
 	  .then(res => {
-	    console.log(`statusCode: ${res.status}`)
-        response.send(res['data']['records'])
-	  })
-	  .catch(error => {
-	    console.error(error)
-	  })
+		console.log(`statusCode: ${res.status}`)
+		//obj['Commune'] = res['data']['records'][0]['fields']['nom_de_la_commune'];
+		//obj['Code_Insee'] = res['data']['records'][0]['fields']['code_commune_insee']
+		//obj['Coord'] = res['data']['records'][0]['geometry']['coordinates']
+		console.log("nb records", res['data']['records'].length);
+		res['data']['records'].forEach(element =>{
+			const obj = {};
+			console.log("element", element);
+			obj['nom_de_la_commune'] = element['fields']['nom_de_la_commune'];
+			obj['code_commune_insee'] = element['fields']['code_commune_insee']
+			obj['coordinates'] = element['geometry']['coordinates']
+			
+			data = [...data, obj]
+		})
+		response.send(data)
+
+
+	})
+
 })
+
 
 app.listen(PORT, function(){
-	console.log('Hello :'+ PORT);
+	console.log('Bienvenu sur le port :'+ PORT);
 })
