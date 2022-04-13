@@ -39,6 +39,12 @@ app.get('/Communes', function(request, response){
 	})
 
 })
+app.get('/Communes/:id', (req,res) => {
+    const id = parseInt(req.params.code_commune_insee)
+    const d = data.find(d => data.code_commune_insee === id)
+    res.status(200).json(d)
+})
+  
 
 app.get('/nom1', function(request, response) {
     // Inspirée du site suivant pour le code : https://www.geeksforgeeks.org/how-to-read-and-write-excel-file-in-node-js/
