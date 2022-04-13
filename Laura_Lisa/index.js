@@ -40,32 +40,35 @@ app.get('/nom1', function(request, response) {
 
     const insee = file.Sheets[files[0]]; //Récupération de la première et unique feuille du fichier excel pour pouvoir parser les données.
 
-    var json1 = {}; // Création d'une variable au format json
 
     var tab = 2 //Là où les observations du fichier excel commencent
     var nb = insee.length // taille du fichier excel
 
-    //Création d'une boucle qui rempli le tableau json crée avec les données dont ont à besoin.
-    //On itère la boucle sur le nombre total d'observation dans le but de récupérer dans un format json les données.
+    var tableau = []
+        //Création d'une boucle qui rempli le tableau json crée avec les données dont ont à besoin.
+        //On itère la boucle sur le nombre total d'observation dans le but de récupérer dans un format json les données.
     for (let i = tab; i < 5; i++) {
-        json1[insee['B' + i]['v']] = {}; // On créer un tableau json vide en récupérant comme identifiant de chaque tableau : le code insee. Création d'un identifiant unique.
-        json1[insee['B' + i]['v']]['bureau_vote'] = insee['A' + i]['v']; // On rempli le tableau json de la ligne i avec l'observation du bureau de vote,
-        json1[insee['B' + i]['v']]['Departement'] = insee['D' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['Inscrits'] = insee['H' + i]['v']; // avec le nb d'inscrit,
-        json1[insee['B' + i]['v']]['Votants'] = insee['K' + i]['v']; // avec le nb de votants,
-        json1[insee['B' + i]['v']]['LE PEN_ins'] = insee['AB' + i]['v']; // avec le % de votes de Marine Lepen,
-        json1[insee['B' + i]['v']]['MACRON_ins'] = insee['AC' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['HAMON_ins'] = insee['AD' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['ARTHAUD_ins'] = insee['AE' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['POUTOU_ins'] = insee['AF' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['CHEMINADE_ins'] = insee['AG' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['LASSALLE_ins'] = insee['AH' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['MÉLENCHON_ins'] = insee['AI' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['ASSELINEAU_ins'] = insee['AJ' + i]['v']; // avec le nom des départements,
-        json1[insee['B' + i]['v']]['FILLON_ins'] = insee['AK' + i]['v']; // avec le nom des départements,
+        var json1 = {}; // Création d'une variable au format json
+        json1['CodeInsee'] = insee['B' + i]['v']; // On créer un tableau json vide en récupérant comme identifiant de chaque tableau : le code insee. Création d'un identifiant unique.
+        json1['bureau_vote'] = insee['A' + i]['v']; // On rempli le tableau json de la ligne i avec l'observation du bureau de vote,
+        json1['Departement'] = insee['D' + i]['v']; // avec le nom des départements,
+        json1['Inscrits'] = insee['H' + i]['v']; // avec le nb d'inscrit,
+        json1['Votants'] = insee['K' + i]['v']; // avec le nb de votants,
+        json1['LE PEN_ins'] = insee['AB' + i]['v']; // avec le % de votes de Marine Lepen,
+        json1['MACRON_ins'] = insee['AC' + i]['v']; // avec le  % de votes de Macron,
+        json1['HAMON_ins'] = insee['AD' + i]['v']; // avec le  % de votes de Hamon,
+        json1['ARTHAUD_ins'] = insee['AE' + i]['v']; // avec le  % de votes de Arthaud,
+        json1['POUTOU_ins'] = insee['AF' + i]['v']; // avec le % de votes de Poutou,
+        json1['CHEMINADE_ins'] = insee['AG' + i]['v']; // avec  % de votes de Cheminade,
+        json1['LASSALLE_ins'] = insee['AH' + i]['v']; // avec  % de votes de Lassalle,
+        json1['MÉLENCHON_ins'] = insee['AI' + i]['v']; // avec  % de votes de Mélenchon,
+        json1['ASSELINEAU_ins'] = insee['AJ' + i]['v']; // avec  % de votes de ASSELINEAU,
+        json1['FILLON_ins'] = insee['AK' + i]['v']; // avec  % de votes de Fillon,
+
+        tableau = [...tableau, json1]
 
     }
-    response.json(json1); // Affichage du tableau au format json
+    response.json(tableau); // Affichage du tableau au format json
 
 })
 
