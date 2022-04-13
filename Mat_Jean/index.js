@@ -8,18 +8,22 @@ const puppeteer = require('puppeteer');
 		let ville = [];
 		let elements = document.querySelectorAll('tr.odswidget-table__internal-table-row');
 		for (element of elements) {
-      		let elem = document.querySelectorAll('div.odswidget-table__cell-container');
-      		i = 0;
+      		let elem = element.querySelectorAll('div.odswidget-table__cell-container');
+			test = [];
+			i = 0;
       		for (el of elem) {
-				i += 1;
-				test = []
-				if (i == 2) {
-          			test.push({cd: el.querySelector('span')?.textContent});
-        		} else {
+				if (i==1) {
+					test.push({codeInsee: el.querySelector('span')?.textContent});
+				}
+				else if (i==9) {
+					test.push({pop: parseFloat((el.querySelector('span')?.textContent).replace(",", "."))*1000});
+				}
+				else {
 					;
-       			}
-        		ville.push({ok: test})
+				}
+				i += 1;
       		}
+			ville.push(test);
 		}
 		return ville;
 	});
