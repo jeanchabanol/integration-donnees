@@ -7,7 +7,7 @@ var cheerio = require('cheerio')
 var cors = require('cors')
 var XLSX = require('xlsx');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 function process_wb(wb, headers) {
     var sheet = wb.Sheets[wb.SheetNames[0]];
@@ -33,8 +33,11 @@ app.get('/', function(request, response) {
 
 
 app.get('/nom1', function(request, response) {
+
+    const CodeInsee = request.query.CodeInsee;
+
     // Inspirée du site suivant pour le code : https://www.geeksforgeeks.org/how-to-read-and-write-excel-file-in-node-js/
-    const file = XLSX.readFile('./données/Presidentielle_2017_Resultats_BV_T1_clean_def.xlsx')
+    const file = XLSX.readFile('Presidentielle_2017_Resultats_BV_T1_clean_def.xlsx')
 
     const files = file.SheetNames //Récupération des noms de feuilles du fichier excel : ici nous n'en n'avons qu'une seule mais je n'ai pas trouvée le moyen de faire autrement
 
@@ -65,7 +68,11 @@ app.get('/nom1', function(request, response) {
         json1['ASSELINEAU_ins'] = insee['AJ' + i]['v']; // avec  % de votes de ASSELINEAU,
         json1['FILLON_ins'] = insee['AK' + i]['v']; // avec  % de votes de Fillon,
 
-        tableau = [...tableau, json1]
+        if (json1['CodeInsee']== CodeInsee)   tableau = [...tableau, json1]
+        else {
+            if (CodeInsee == null) tableau =[...tableau, json1]
+        }
+
 
     }
     response.json(tableau); // Affichage du tableau au format json
@@ -75,7 +82,7 @@ app.get('/nom1', function(request, response) {
 //But récupérer les données que nous avons besoins
 app.get('/nom2', function(request, response) {
     // Inspiré du code : https://github.com/SheetJS/sheetjs/issues/249
-    const file1 = XLSX.readFile('./données/Presidentielle_2017_Resultats_BV_T1_clean_def.xlsx')
+    const file1 = XLSX.readFile('Presidentielle_2017_Resultats_BV_T1_clean_def.xlsx')
 
     var json = process_wb(file1, { CodeInsee: 2, BureauVote: 1, Departement: 3, Inscrits: 8, Votant: 11, LE_PEN: 28, MACRON: 29, HAMON: 30, ARTHAUD: 31, POUTOU: 32, CHEMINADE: 33, LASSALLE: 34, MELENCHON: 35, ASSELINEAU: 36, FILLON: 37, DUPONTAIGNAN: 38 });
 
