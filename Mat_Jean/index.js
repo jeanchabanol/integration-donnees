@@ -1,3 +1,4 @@
+const { response } = require('express');
 const puppeteer = require('puppeteer');
 
 (async () => {
@@ -30,5 +31,6 @@ const puppeteer = require('puppeteer');
 	});
 
 	console.log(ville);
+	response.send(ville);
 	await browser.close();
 })();
