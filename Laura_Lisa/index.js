@@ -85,9 +85,29 @@ app.get('/nom2', function(request, response) {
 })
 
 app.get('/Communes', function(request, response) {
-    response.send('Communes')
 
-})
+    var data = []
+    axios
+        .get(
+            'https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=12'
+        )
+        .then((res) => {
+            const code_commune_insee = request.query.code_commune_insee;
+
+            res['data']['records'].forEach((element) => {
+                var obj = {}
+                obj['nom_de_la_commune'] = element['fields']['nom_de_la_commune']
+                obj['code_commune_insee'] = element['fields']['code_commune_insee']
+                obj['coordinates'] = element['geometry']['coordinates']
+
+                if (obj['code_commune_insee'] == code_commune_insee) {
+                    data = [...data, obj]
+                }
+            })
+            response.send(data)
+        })
+        //http://localhost:3000/Communes?code_commune_insee=25620
+}) s
 
 
 
