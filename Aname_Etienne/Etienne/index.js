@@ -93,7 +93,7 @@ app.get('/join', function(req, response){
 	comm().then(function(data){
 		const arr1 = [...data];
 		const arr2 = [...tableau]
-		let arr3 = arr1.map((item, i) => Object.assign({}, item, arr2[i]));
+		const a3 = arr1.map(t1 => ({...t1, ...arr2.find(t2 => t2.CodeInsee === t1.CodeInsee)}))
 		response.send(arr3);
 		
 	})
