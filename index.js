@@ -62,8 +62,9 @@ app.get('/Communes', function(request, response) {
                 obj['code_commune_insee'] = element['fields']['code_commune_insee']
                 obj['coordinates'] = element['geometry']['coordinates']
 
-                if (obj['code_commune_insee'] == code_commune_insee) {
-                    data = [...data, obj]
+                if (obj['code_commune_insee'] == code_commune_insee) data = [...data, obj]
+                else {
+                    if (code_commune_insee == null) data = [...data, obj]
                 }
             })
             response.send(data)
