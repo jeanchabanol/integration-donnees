@@ -22,7 +22,7 @@ app.get('/', function(request, response){
 function comm(){
 		var data = [];
 		return axios
-		.get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=100')
+		.get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=5000')
 		.then(res => {
 			//console.log(`statusCode: ${res.status}`)
 			//obj['Commune'] = res['data']['records'][0]['fields']['nom_de_la_commune'];
@@ -55,7 +55,7 @@ function nom(){
 		var nb = insee.length // taille du fichier excel
 			//Création d'une boucle qui rempli le tableau json crée avec les données dont ont à besoin.
 			//On itère la boucle sur le nombre total d'observation dans le but de récupérer dans un format json les données.
-		for (let i = tab; i < 100; i++) {
+		for (let i = tab; i < 5000; i++) {
 			var json1 = {}; // Création d'une variable au format json
 			json1['CodeInsee'] = insee['B' + i]['v']; // On créer un tableau json vide en récupérant comme identifiant de chaque tableau : le code insee. Création d'un identifiant unique.
 			json1['bureau_vote'] = insee['A' + i]['v']; // On rempli le tableau json de la ligne i avec l'observation du bureau de vote,
@@ -87,11 +87,15 @@ app.get('/nom_app', function(req, response){
 	response.send(nom());
 })
 
+
 app.get('/join', function(req, response){
 	var tableau = nom();
 	comm().then(function(data){
-		const result = [...data, ...tableau];
-		response.send(result);
+		const arr1 = [...data];
+		const arr2 = [...tableau]
+		let arr3 = arr1.map((item, i) => Object.assign({}, item, arr2[i]));
+		response.send(arr3);
+		
 	})
 })
 
