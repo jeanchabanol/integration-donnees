@@ -39,37 +39,28 @@ app.get('/Communes', function(request, response){
 	})
 
 })
-app.get('/Communes/:code_commune_insee', (request, response) => {
+
+app.get('/Commune', (request, response) => {
+    const CodeInsee = request.query.code_commune_insee;
     var data = [];
 	axios
 	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=12')
-	  .then(res => {
+	  .then(res => { 
 		//obj['Commune'] = res['data']['records'][0]['fields']['nom_de_la_commune'];
 		//obj['Code_Insee'] = res['data']['records'][0]['fields']['code_commune_insee']
 		//obj['Coord'] = res['data']['records'][0]['geometry']['coordinates']
 		res['data']['records'].forEach(element =>{
-			const obj = {};
+			var obj = {};
 			console.log("element", element);
 			obj['nom_de_la_commune'] = element['fields']['nom_de_la_commune'];
 			obj['code_commune_insee'] = element['fields']['code_commune_insee']
 			obj['coordinates'] = element['geometry']['coordinates']
-			
-			data = [...data, obj]
+            if (element['fields']['code_commune_insee']== CodeInsee)
+                data = [...data, obj]
 		})
     })
-    const products = [
-        { id: 1, name: 'iPhone', price: 800 },
-        { id: 2, name: 'iPad', price: 650 },
-        { id: 3, name: 'iWatch', price: 750 }
-    ]
-    //app.get('/api/products/:productID', (req, res) => {
+        response.send(data); // Affichage du tableau au format json 
 
-    //const id = Number(req.params.productID)
-    //const product = products.find(product => product.id === id)
-
-    const id = parseInt(request.params.code_commune_insee)
-    const d = data.find(d => parseInt(data.code_commune_insee) === id)
-    response.send(d + '')
 
 })
   
