@@ -12,6 +12,9 @@ const PORT = process.env.PORT || 3000;
 const axios = require('axios');
 const puppeteer = require('puppeteer');
 
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
+
 function comm_f(){
 	var data = [];
 	return axios
@@ -192,7 +195,11 @@ app.get('/join', function(req, response){
 	})
 })
 
-
+app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+  );
 
 app.listen(PORT, function(){
 	console.log('Bienvenu sur le port :'+ PORT);
