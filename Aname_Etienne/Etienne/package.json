@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.26.1",
+    "csv-express": "^1.2.2",
     "express": "^4.17.3",
     "fs": "^0.0.1-security",
     "node-fetch": "^3.2.3",
