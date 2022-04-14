@@ -30,10 +30,12 @@ Nous nous sommes organisés par groupe de 2 personnes :
     Permet de récupérer le code Insee ainsi que la population qui lui correspond en parcourant chaque lignes et chaque colonnes. 
     C'est dans les colonnes qu'on récupére l'information. La population est converti en float et multiplié par 1000 car la population est affiché en millier.
 - Anamé et Etienne : Travail sur l'API, 
-    Permet de créer un tableau Json avec le lien de l'API où est stocké chaqye élément qu'on souhaite garder. 
+    Permet de créer un tableau Json avec le lien de l'API où est stocké chaque élément qu'on souhaite garder. 
 - Laura et Lisa : Travail sur téléchargement de fichier, 
     Téléchargement d'un fichier, le but est de partir d'un tableau vide et de parcourir chaque ligne du fichier pour récupérer dans le tableau les informations qu'on souhaite.
     La méthode utilisée est le Parsing. On retourne un tableau de données Json en fonction de chaque code Insee. 
+- Tout le monde :
+    Création d'une quatrième route pour faire la jointure entre les routes communes et les routes votes pour afficher les informations combinées. 
 
 
 L'objectif final en perspective est de créer une carte grâce aux coordonnées GPS où chaque commune aurait la couleur correspondante au candidat arrivé en tête dans cette commune

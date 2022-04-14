@@ -22,15 +22,15 @@
     "produces": ["datajson.json"],
    
     "paths": {
-      "/Route1": {
+      "/population": {
         "get": {
-          "tags": ["Tags"],
-          "summary": "Summary",
+          "tags": ["Population des communes"],
+          "summary": "Scraping pour récupérer population par code Insee.",
           "responses": {
             "200": {
-              "description": "decription",
+              "description": "Permet de récupérer le code Insee ainsi que la population qui lui correspond en parcourant chaque lignes et chaque colonnes. C'est dans les colonnes qu'on récupére l'information. La population est converti en float et multiplié par 1000 car la population est affiché en millier.",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Scraping_population"
               }
             }
           }
@@ -38,30 +38,45 @@
       },
 
 
-      "/test": {
+      "/Communes": {
         "get": {
-          "tags": ["tag"],
-          "summary": "summary",
+          "tags": ["Communes"],
+          "summary": "Récupération grâce à une API des données sur les communes par code Insee",
           "responses": {
             "200": {
-              "description": "description",
+              "description": "Permet de créer un tableau Json avec le lien de l'API où est stocké chaque élément qu'on souhaite garder. ",
               "schema": {
-                "$ref": "#/definitions/Mateo"
+                "$ref": "#/definitions/API_Communes"
               }
             }
           }
         }
       },
 
-      "/route2": {
+      "/vote": {
         "get": {
-          "tags": ["tags"],
-          "summary": "summary",
+          "tags": ["Résultats des votes à la présidentielle"],
+          "summary": "Récupération par téléchargements des nombres de votes par code Insee",
           "responses": {
             "200": {
-              "description": "decription",
+              "description": "Téléchargement d'un fichier, le but est de partir d'un tableau vide et de parcourir chaque ligne du fichier pour récupérer dans le tableau les informations qu'on souhaite. La méthode utilisée est le Parsing. On retourne un tableau de données Json en fonction de chaque code Insee. ",
               "schema": {
-                "$ref": "#/definitions/Jean"
+                "$ref": "#/definitions/Download_Vote"
+              }
+            }
+          }
+        }
+      },
+
+      "/join": {
+        "get": {
+          "tags": ["Jointure par code Insee"],
+          "summary": "Jointures entre communes et votes par code Insee",
+          "responses": {
+            "200": {
+              "description": "Jointure entre communes et votes qui sont stockés dans des fonction (com_f() et vote_f()). Retourne un tableau Json des données totales avec comme clé primaire le code Insee. ",
+              "schema": {
+                "$ref": "#/definitions/Jointure"
               }
             }
           }
@@ -72,59 +87,206 @@
 
       
       "definitions": {
-        "User": {
-          "required": ["nom_sortie1", "nom_sortie2", "nom_sortie3"],
+        "Scraping_population": {
+          "required": ["codeInsee", "pop"],
           "properties": {
-            "nom_sortie1": {
-              "type": "integer",
+            "codeInsee": {
+              "type": "string",
                
-               "exemple": 500,
+               "exemple": "54318",
               "uniqueItems": true
             },
-            "nom_sortie2": {
-              "type": "string"
-            },
-            "nom_sortie3": {
-              "type": "string"
+            "pop": {
+              "type": "integer",
+
+              "exemple": 6000
             }
           }
         },
 
 
-        "Mateo": {
-            "required": ["nom_sortie1", "nom_sortie2", "nom_sortie3"],
+        "API_Communes": {
+            "required": ["nom_de_la_commune", "code_commune_insee", "coordinates"],
             "properties": {
-              "nom_sortie1": {
-                "type": "integer",
+              "nom_de_la_commune": {
+                "type": "string",
                  
-                 "exemple": 500,
+                 "exemple": "VILLE DU PONT"
+              },
+              "code_commune_insee": {
+                "type": "string",
+
+                "exemple": "25620",
                 "uniqueItems": true
               },
-              "nom_sortie2": {
-                "type": "string"
-              },
-              "nom_sortie3": {
-                "type": "string"
+              "coordinates": {
+                "type": "integer",
+                "exemple": [6.498147193,46.999873398]
               }
             }
           },
 
         
 
-          "Jean": {
-            "required": ["nom_sortie1", "nom_sortie2", "nom_sortie3"],
+          "Download_Vote": {
+            "required": ["codeInsee", "bureau_vote", "Departement","Inscrits", "Votants", "LE PEN_ins","MACRON_ins", "HAMON_ins", "ARTHAUD_ins","POUTOU_ins", "CHEMINADE_ins", "LASSALLE_ins","MÉLENCHON_ins", "ASSELINEAU_ins", "FILLON_ins"],
             "properties": {
-              "nom_sortie1": {
-                "type": "integer",
+              "codeInsee": {
+                "type": "string",
                  
-                 "exemple": 500,
+                 "exemple": "01001",
                 "uniqueItems": true
               },
-              "nom_sortie2": {
-                "type": "string"
+              "bureau_vote": {
+                "type": "string",
+                "exemple": "010010001"
               },
-              "nom_sortie3": {
-                "type": "string"
+              "Departement": {
+                "type": "string",
+                "exemple": "Ain"
+              },
+              "Inscrits": {
+                "type": "integer",
+                "exemple": 598
+              },
+              "Votants": {
+                "type": "integer",
+                "exemple": 506
+              },
+              "LE PEN_ins": {
+                "type": "integer",
+                "exemple": 21.070234113712
+
+              },
+              "MACRON_ins": {
+                "type": "integer",
+                "exemple": 19.899665551839
+              },
+              "HAMON_ins": {
+                "type": "integer",
+                "exemple": 4.8494983277592
+
+              },
+              "ARTHAUD_ins": {
+                "type": "integer",
+                "exemple": 0.66889632107023
+
+              },
+              "POUTOU_ins": {
+                "type": "integer",
+                "exemple": 0.66889632107023
+
+              },
+              "CHEMINADE_ins": {
+                "type": "integer",
+                "exemple": 0.33444816053512
+
+              },
+              "LASSALLE_ins": {
+                "type": "integer",
+                "exemple": 0.33444816053512
+
+              },
+              "MÉLENCHON_ins": {
+                "type": "integer",
+                "exemple": 9.866220735786
+
+              },
+              "ASSELINEAU_ins": {
+                "type": "integer",
+                "exemple": 1.0033444816054
+
+              },
+              "FILLON_ins": {
+                "type": "integer",
+                "exemple": 18.394648829431
+
+              }
+            }
+          },
+
+          "Jointure": {
+            "required": ["nom_de_la_commune", "codeInsee" , "coordinates", "bureau_vote", "Departement","Inscrits", "Votants", "LE PEN_ins","MACRON_ins", "HAMON_ins", "ARTHAUD_ins","POUTOU_ins", "CHEMINADE_ins", "LASSALLE_ins","MÉLENCHON_ins", "ASSELINEAU_ins", "FILLON_ins"],
+            "properties": {
+              "nom_de_la_commune": {
+                "type": "string",
+                 
+                 "exemple": "VILLE DU PONT"
+              },
+              "codeInsee": {
+                "type": "string",
+
+                "exemple": "25620",
+                "uniqueItems": true
+              },
+              "coordinates": {
+                "type": "integer",
+                "exemple": [6.498147193,46.999873398]
+              },
+              "bureau_vote": {
+                "type": "string",
+                "exemple": "010010001"
+              },
+              "Departement": {
+                "type": "string",
+                "exemple": "Ain"
+              },
+              "Inscrits": {
+                "type": "integer",
+                "exemple": 598
+              },
+              "Votants": {
+                "type": "integer",
+                "exemple": 506
+              },
+              "LE PEN_ins": {
+                "type": "integer",
+                "exemple": 21.070234113712
+
+              },
+              "MACRON_ins": {
+                "type": "integer",
+                "exemple": 19.899665551839
+              },
+              "HAMON_ins": {
+                "type": "integer",
+                "exemple": 4.8494983277592
+
+              },
+              "ARTHAUD_ins": {
+                "type": "integer",
+                "exemple": 0.66889632107023
+
+              },
+              "POUTOU_ins": {
+                "type": "integer",
+                "exemple": 0.66889632107023
+
+              },
+              "CHEMINADE_ins": {
+                "type": "integer",
+                "exemple": 0.33444816053512
+
+              },
+              "LASSALLE_ins": {
+                "type": "integer",
+                "exemple": 0.33444816053512
+
+              },
+              "MÉLENCHON_ins": {
+                "type": "integer",
+                "exemple": 9.866220735786
+
+              },
+              "ASSELINEAU_ins": {
+                "type": "integer",
+                "exemple": 1.0033444816054
+
+              },
+              "FILLON_ins": {
+                "type": "integer",
+                "exemple": 18.394648829431
+
               }
             }
           }
