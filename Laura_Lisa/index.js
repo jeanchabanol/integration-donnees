@@ -107,7 +107,7 @@ app.get('/Communes', function(request, response) {
             response.send(data)
         })
         //http://localhost:3000/Communes?code_commune_insee=25620
-}) s
+})
 
 
 

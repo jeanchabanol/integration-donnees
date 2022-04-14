@@ -46,29 +46,31 @@ app.get('/comm_app', function(req, response){
 	response.send(comm());
 })
 
-app.get('/Commune', (request, response) => {
-    const CodeInsee = request.query.code_commune_insee;
-    var data = [];
-	axios
-	  .get('https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=12')
-	  .then(res => { 
-		//obj['Commune'] = res['data']['records'][0]['fields']['nom_de_la_commune'];
-		//obj['Code_Insee'] = res['data']['records'][0]['fields']['code_commune_insee']
-		//obj['Coord'] = res['data']['records'][0]['geometry']['coordinates']
-		res['data']['records'].forEach(element =>{
-			var obj = {};
-			console.log("element", element);
-			obj['nom_de_la_commune'] = element['fields']['nom_de_la_commune'];
-			obj['code_commune_insee'] = element['fields']['code_commune_insee']
-			obj['coordinates'] = element['geometry']['coordinates']
-            if (element['fields']['code_commune_insee']== CodeInsee)
-                data = [...data, obj]
-		})
-    })
-        response.send(data); // Affichage du tableau au format json 
+app.get('/Communes', function(request, response) {
 
+    var data = []
+    axios
+        .get(
+            'https://datanova.legroupe.laposte.fr/api/records/1.0/search/?dataset=laposte_hexasmal&rows=12'
+        )
+        .then((res) => {
+            const code_commune_insee = request.query.code_commune_insee;
 
+            res['data']['records'].forEach((element) => {
+                var obj = {}
+                obj['nom_de_la_commune'] = element['fields']['nom_de_la_commune']
+                obj['code_commune_insee'] = element['fields']['code_commune_insee']
+                obj['coordinates'] = element['geometry']['coordinates']
+
+                if (obj['code_commune_insee'] == code_commune_insee) {
+                    data = [...data, obj]
+                }
+            })
+            response.send(data)
+        })
+        //http://localhost:3000/Communes?code_commune_insee=25620
 })
+
   
 
 
