@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer');
 	const browser = await puppeteer.launch({headless: true});
 	const page = await browser.newPage();
 	await page.goto(`https://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/table/?flg=fr`);
+	await page.waitFor(1000);
 	const ville = await page.evaluate(() => {
 		let ville = [];
 		let elements = document.querySelectorAll('tr.odswidget-table__internal-table-row');
@@ -27,6 +28,7 @@ const puppeteer = require('puppeteer');
 		}
 		return ville;
 	});
+
 	console.log(ville);
 	await browser.close();
 })();

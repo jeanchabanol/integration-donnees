@@ -21,6 +21,7 @@ const puppeteer = require('puppeteer');
 		}
 		return ville;
 	});
+	
 	console.log(ville);
 	await browser.close();
 })();
