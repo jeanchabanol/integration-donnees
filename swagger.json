@@ -1,0 +1,137 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "TITRE",
+      "description": "Titre2",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Users",
+        "description": "API for users in the system"
+      }
+    ],
+    "schemes": ["http"],
+    "consumes": ["data.csv"],
+    "produces": ["datajson.json"],
+   
+    "paths": {
+      "/Route1": {
+        "get": {
+          "tags": ["Tags"],
+          "summary": "Summary",
+          "responses": {
+            "200": {
+              "description": "decription",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+
+
+      "/test": {
+        "get": {
+          "tags": ["tag"],
+          "summary": "summary",
+          "responses": {
+            "200": {
+              "description": "description",
+              "schema": {
+                "$ref": "#/definitions/Mateo"
+              }
+            }
+          }
+        }
+      },
+
+      "/route2": {
+        "get": {
+          "tags": ["tags"],
+          "summary": "summary",
+          "responses": {
+            "200": {
+              "description": "decription",
+              "schema": {
+                "$ref": "#/definitions/Jean"
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+      
+      "definitions": {
+        "User": {
+          "required": ["nom_sortie1", "nom_sortie2", "nom_sortie3"],
+          "properties": {
+            "nom_sortie1": {
+              "type": "integer",
+               
+               "exemple": 500,
+              "uniqueItems": true
+            },
+            "nom_sortie2": {
+              "type": "string"
+            },
+            "nom_sortie3": {
+              "type": "string"
+            }
+          }
+        },
+
+
+        "Mateo": {
+            "required": ["nom_sortie1", "nom_sortie2", "nom_sortie3"],
+            "properties": {
+              "nom_sortie1": {
+                "type": "integer",
+                 
+                 "exemple": 500,
+                "uniqueItems": true
+              },
+              "nom_sortie2": {
+                "type": "string"
+              },
+              "nom_sortie3": {
+                "type": "string"
+              }
+            }
+          },
+
+        
+
+          "Jean": {
+            "required": ["nom_sortie1", "nom_sortie2", "nom_sortie3"],
+            "properties": {
+              "nom_sortie1": {
+                "type": "integer",
+                 
+                 "exemple": 500,
+                "uniqueItems": true
+              },
+              "nom_sortie2": {
+                "type": "string"
+              },
+              "nom_sortie3": {
+                "type": "string"
+              }
+            }
+          }
+        
+
+      }
+        
+      
+    
+}

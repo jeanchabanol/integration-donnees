@@ -1,11 +1,19 @@
 "use strict";
 
-import express from 'express'
-const app = express()
-import axios from 'axios'
-const PORT = process.env.PORT || 3001;
-import XLSX from 'xlsx'
 
+var express = require("express") /* npm install express */
+var csv = require('csv-express') /* npm install csv-express*/
+var fetchUrl = require("fetch").fetchUrl
+var cheerio = require('cheerio')
+var cors = require('cors')
+var XLSX = require('xlsx');
+const app = express();
+const PORT = process.env.PORT || 3000;
+const axios = require('axios');
+
+
+const swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 
 
 
@@ -165,6 +173,11 @@ app.get('/nom1', function(request, response) {
 
 })
 
+app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+  );
 
 app.listen(PORT, function() {
     console.log('Bienvenu sur le port :' + PORT);
