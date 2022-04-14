@@ -89,14 +89,13 @@ app.get('/nom_app', function(req, response){
 
 
 app.get('/join', function(req, response){
-	var tableau = nom();
-	comm().then(function(data){
-		const arr1 = [...data];
-		const arr2 = [...tableau]
-		const a3 = arr1.map(t1 => ({...t1, ...arr2.find(t2 => t2.CodeInsee === t1.CodeInsee)}))
-		response.send(arr3);
-		
-	})
+    var tableau = nom();
+    comm().then(function(data){
+        const arr1 = [...data];
+        const arr2 = [...tableau]
+        const a3 = arr1.map(t1 => ({...t1, ...arr2.find(t2 => t2.CodeInsee === t1.CodeInsee)}))
+        response.send(a3);
+    })
 })
 
 app.listen(PORT, function(){
