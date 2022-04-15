@@ -1,10 +1,9 @@
-
 "use strict";
 
 var express = require("express") /* npm install express */
 var XLSX = require('xlsx');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const axios = require('axios');
 const puppeteer = require('puppeteer');
 
@@ -77,36 +76,39 @@ app.get('/', function(request, response){
 })
 
 app.get('/population', function (req, response) {
-    (async () => {
-        const browser = await puppeteer.launch({ headless: true });
-        const page = await browser.newPage();
-        await page.goto(`https://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/table/?flg=fr`);
-        await page.waitFor(1000);
-        const ville = await page.evaluate(() => {
-            let ville = [];
-            let elements = document.querySelectorAll('tr.odswidget-table__internal-table-row');
-            for (element of elements) {
-                let elem = element.querySelectorAll('div.odswidget-table__cell-container');
-                test = [];
-                i = 0;
-                for (el of elem) {
-                    if (i == 1) {
-                        test.push({ codeInsee: el.querySelector('span')?.textContent });
-                    }
-                    else if (i == 9) {
-                        test.push({ pop: parseFloat((el.querySelector('span')?.textContent).replace(",", ".")) * 1000 });
-                    }
-                    else {
-                        ;
-                    }
-                    i += 1;
-                }
-                ville.push(test);
-            }
-            return ville;
-        });
-        response.send(ville);
-    })();
+	(async () => {
+		const browser = await puppeteer.launch({headless: true});
+		const page = await browser.newPage();
+		await page.goto(`https://public.opendatasoft.com/explore/dataset/correspondance-code-insee-code-postal/table/?flg=fr`);
+		await page.waitFor(1000);
+		const ville = await page.evaluate(() => {
+			let ville = [];
+			let elements = document.querySelectorAll('tr.odswidget-table__internal-table-row');
+			for (element of elements) {
+				let elem = element.querySelectorAll('div.odswidget-table__cell-container');
+				i = 0;
+				for (el of elem) {
+					if (i==1) {
+						ok = el.querySelector('span')?.textContent;
+					}
+					else if (i==9) {
+						ville.push({
+							codeInsee: ok,
+							pop: parseFloat((el.querySelector('span')?.textContent).replace(",", "."))*1000
+						});
+					}
+					else {
+						;
+					}
+					i += 1;
+				};
+			}
+			return ville;
+		});
+		console.log(ville);
+		response.send(ville);
+		return ville;
+	})();
 })
 
 
@@ -133,7 +135,7 @@ app.get('/Communes', function(request, response) {
             })
             response.send(data)
         })
-        //http://localhost:3000/Communes?code_commune_insee=25620
+        //http://localhost:3001/Communes?code_commune_insee=25620
 })
 
 app.get('/vote', function(request, response){
