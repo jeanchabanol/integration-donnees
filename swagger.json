@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0", 
-      "title": "TITRE",
-      "description": "Titre2",
+      "title": "ELECTIONS PRESIDENTIELLES 2017",
+      "description": "Perspective : L'objectif final en perspective est de créer une carte grâce aux coordonnées GPS où chaque commune aurait la couleur correspondante au candidat arrivé en tête dans cette commune et lorsque l'on passerait la souris sur l'une d'elles, le pourcentage de votant s'afficherait (nb votant/nb d'habitant) ",
       "license": {
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT"
@@ -19,7 +19,7 @@
     ],
     "schemes": ["http"],
     "consumes": ["data.csv"],
-    "produces": ["datajson.json"],
+    "produces": ["presidentielles.json"],
    
     "paths": {
       "/population": {
