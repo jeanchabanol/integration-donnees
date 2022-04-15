@@ -2,10 +2,6 @@
 "use strict";
 
 var express = require("express") /* npm install express */
-var csv = require('csv-express') /* npm install csv-express*/
-var fetchUrl = require("fetch").fetchUrl
-var cheerio = require('cheerio')
-var cors = require('cors')
 var XLSX = require('xlsx');
 const app = express();
 const PORT = process.env.PORT || 3000;
